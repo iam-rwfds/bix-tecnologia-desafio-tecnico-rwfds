@@ -6,6 +6,7 @@
       "dependencies": {
         "@ant-design/nextjs-registry": "^1.1.0",
         "antd": "^5.26.6",
+        "dayjs": "^1.11.13",
         "next": "15.4.3",
         "react": "19.1.0",
         "react-dom": "19.1.0",
