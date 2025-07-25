@@ -10,6 +10,8 @@ type Props = {
     | "tipo"
     | "categoriaEmpresa"
     | "chave"]: string;
+} & {
+  [key in "dataEPOCH"]?: number;
 };
 
 const styles = {
