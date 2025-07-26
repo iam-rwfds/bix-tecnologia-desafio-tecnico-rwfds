@@ -49,6 +49,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const router = useRouter();
 
+  const logout = useCallback(() => {
+    setAccessToken(null);
+    setIsUserAuthenticated(false);
+    setUser(null);
+  }, [setAccessToken]);
+
   const validarSessao = useCallback(async () => {
     if (!acessToken) {
       return false;
@@ -66,12 +72,64 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return true;
     }
 
-    setAccessToken(null);
-    setIsUserAuthenticated(false);
-    setUser(null);
+    logout();
 
     return false;
-  }, [acessToken, setAccessToken]);
+  }, [acessToken, logout]);
+
+  const login: AuthContextType["login"] = async (email, password) => {
+    try {
+      const usuarioComMesmoEmail = contasLocalStorage.find(
+        (conta) => conta.email === email,
+      );
+
+      if (!usuarioComMesmoEmail) {
+        return false;
+      }
+
+      const hashedPassword = (
+        await (
+          await fetch("/api/auth/verify-hash", {
+            body: JSON.stringify({
+              content: password,
+              hashedContent: usuarioComMesmoEmail.password,
+            }),
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        ).json()
+      ).isValid;
+
+      const at = (
+        await (
+          await fetch("/api/auth/generate-token", {
+            body: JSON.stringify({ sub: email }),
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        ).json()
+      ).accessToken;
+
+      setAccessToken(at);
+
+      setContasLocalStorage((prev) => [
+        ...structuredClone(prev),
+        { email, password: hashedPassword },
+      ]);
+
+      setIsUserAuthenticated(true);
+
+      return true;
+    } catch (err) {
+      console.error(err);
+
+      return false;
+    }
+  };
 
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
@@ -135,62 +193,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return false;
     }
   };
-
-  const login: AuthContextType["login"] = async (email, password) => {
-    try {
-      const usuarioComMesmoEmail = contasLocalStorage.find(
-        (conta) => conta.email === email,
-      );
-
-      if (!usuarioComMesmoEmail) {
-        return false;
-      }
-
-      const hashedPassword = (
-        await (
-          await fetch("/api/auth/verify-hash", {
-            body: JSON.stringify({
-              content: password,
-              hashedContent: usuarioComMesmoEmail.password,
-            }),
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-        ).json()
-      ).isValid;
-
-      const at = (
-        await (
-          await fetch("/api/auth/generate-token", {
-            body: JSON.stringify({ sub: email }),
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-        ).json()
-      ).accessToken;
-
-      setAccessToken(at);
-
-      setContasLocalStorage((prev) => [
-        ...structuredClone(prev),
-        { email, password: hashedPassword },
-      ]);
-
-      setIsUserAuthenticated(true);
-
-      return true;
-    } catch (err) {
-      console.error(err);
-
-      return false;
-    }
-  };
-
-  const logout = () => {};
 
   const value: AuthContextType = {
     isAuthenticated: isUserAuthenticated,
