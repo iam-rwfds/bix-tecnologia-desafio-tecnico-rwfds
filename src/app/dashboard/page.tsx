@@ -5,11 +5,11 @@ import type { Dayjs } from "dayjs";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "~/contexts/AuthContext";
 import CardTransacao, {
   type CardTransacaoProps,
 } from "./components/CardTransacao";
 import Filtro from "./components/Filtro";
-import { useAuth } from "~/contexts/AuthContext";
 
 const styles = {
   Layout: styled(Layout)`

@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "~/contexts/AuthContext";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { Input } from "./components/Input";
 import { Label } from "./components/Label";
-import Link from "next/link";
-import { useAuth } from "~/contexts/AuthContext";
-import { useRouter } from "next/navigation";
 
 const Page: React.FC = () => {
   const { signup } = useAuth();

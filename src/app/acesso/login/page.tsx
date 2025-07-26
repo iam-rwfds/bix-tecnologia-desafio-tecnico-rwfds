@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "~/contexts/AuthContext";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { Input } from "./components/Input";
 import { Label } from "./components/Label";
-import Link from "next/link";
-import { useAuth } from "~/contexts/AuthContext";
 
 const Page: React.FC = () => {
   const router = useRouter();

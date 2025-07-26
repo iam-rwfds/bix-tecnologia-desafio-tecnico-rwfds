@@ -14,9 +14,9 @@ import {
   YAxis,
 } from "recharts";
 import styled from "styled-components";
+import { useAuth } from "~/contexts/AuthContext";
 import type { CardTransacaoProps } from "../dashboard/components/CardTransacao";
 import Filtro from "./components/Filtro";
-import { useAuth } from "~/contexts/AuthContext";
 
 const styles = {
   Layout: styled(Layout)`
