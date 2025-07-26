@@ -1,34 +1,29 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useLocalStorage } from "usehooks-ts";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { Input } from "./components/Input";
 import { Label } from "./components/Label";
+import Link from "next/link";
+import { useAuth } from "~/contexts/AuthContext";
 
 const Page: React.FC = () => {
   const router = useRouter();
-  const [value] = useLocalStorage(
-    "contas",
-    [] as Record<"email" | "password", string>[],
-  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { login } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const contaDoLocalStorage = value.find(
-      (conta) => conta.email === formData.get("email"),
+    const success = await login(
+      formData.get("email")?.toString() ?? "",
+      formData.get("password")?.toString() ?? "",
     );
 
-    if (
-      contaDoLocalStorage &&
-      contaDoLocalStorage.password === formData.get("password")
-    ) {
-      router.push("/dashboard");
-    }
+    success && router.push("/dashboard");
   };
 
   return (
@@ -75,6 +70,15 @@ const Page: React.FC = () => {
 
           <div>
             <Button type="submit">Login</Button>
+            <Link
+              href={"/acesso/cadastro"}
+              style={{
+                marginTop: "1rem",
+                display: "block",
+              }}
+            >
+              Não tem uma conta? Cadastre-se aqui
+            </Link>
           </div>
         </form>
       </Container>
