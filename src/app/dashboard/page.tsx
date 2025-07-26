@@ -25,7 +25,7 @@ const SIDEBAR_ITEMS = {
 
 const Page: React.FC = () => {
   const [transactions, setTransactions] = useState<CardTransacaoProps[]>([]);
-  const { validarSessao } = useAuth();
+  const { validarSessao, logout } = useAuth();
 
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
@@ -160,7 +160,7 @@ const Page: React.FC = () => {
           <Menu.Item key={SIDEBAR_ITEMS.GRAFICOS}>
             <Link href={"/graficos"}>{SIDEBAR_ITEMS.GRAFICOS}</Link>
           </Menu.Item>
-          <Menu.Item key={SIDEBAR_ITEMS.SAIR}>
+          <Menu.Item key={SIDEBAR_ITEMS.SAIR} onClick={logout}>
             <Link href={"/acesso/login"}>{SIDEBAR_ITEMS.SAIR}</Link>
           </Menu.Item>
         </Menu>
