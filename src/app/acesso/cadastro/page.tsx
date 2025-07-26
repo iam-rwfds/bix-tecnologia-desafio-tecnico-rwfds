@@ -1,38 +1,29 @@
 "use client";
 
-import { useLocalStorage } from "usehooks-ts";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "~/contexts/AuthContext";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { Input } from "./components/Input";
 import { Label } from "./components/Label";
 
 const Page: React.FC = () => {
-  const [_, setValue] = useLocalStorage(
-    "contas",
-    [] as {
-      email: string;
-      password: string;
-    }[],
-  );
+  const { signup } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    setValue((prev) => {
-      if (prev.some((item) => item.email === formData.get("email"))) {
-        return prev;
-      }
+    const sucesso = await signup(
+      formData.get("email")?.toString() ?? "",
+      formData.get("password")?.toString() ?? "",
+    );
 
-      return [
-        ...prev,
-        {
-          email: formData.get("email") as string,
-          password: formData.get("password") as string,
-        },
-      ];
-    });
+    sucesso && router.push("/dashboard");
   };
 
   return (
@@ -78,7 +69,16 @@ const Page: React.FC = () => {
           </div>
 
           <div>
-            <Button type="submit">Login</Button>
+            <Button type="submit">Cadastrar</Button>
+            <Link
+              href={"/acesso/login"}
+              style={{
+                marginTop: "1rem",
+                display: "block",
+              }}
+            >
+              Já tem uma conta? Faça o login
+            </Link>
           </div>
         </form>
       </Container>
