@@ -133,10 +133,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
-      if (validarSessaoResp) {
-        router.push("/dashboard");
-      }
-
       if (!validarSessaoResp) {
         router.push("/acesso/login");
       }
