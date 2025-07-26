@@ -9,6 +9,7 @@ import CardTransacao, {
   type CardTransacaoProps,
 } from "./components/CardTransacao";
 import Filtro from "./components/Filtro";
+import { useAuth } from "~/contexts/AuthContext";
 
 const styles = {
   Layout: styled(Layout)`
@@ -24,35 +25,41 @@ const SIDEBAR_ITEMS = {
 
 const Page: React.FC = () => {
   const [transactions, setTransactions] = useState<CardTransacaoProps[]>([]);
+  const { validarSessao } = useAuth();
 
   useEffect(() => {
-    fetch("http://localhost:3000/transactions.json").then((resp) => {
-      resp.json().then((data) => {
-        setTransactions(
-          data.map((transaction: any) => {
-            const dataEmDate = new Date(transaction.date);
+    validarSessao().then((validarSessaoResp) => {
+      validarSessaoResp &&
+        fetch("http://localhost:3000/transactions.json").then((resp) => {
+          resp.json().then((data) => {
+            setTransactions(
+              data.map((transaction: any) => {
+                const dataEmDate = new Date(transaction.date);
 
-            const dia = dataEmDate.getDate().toString().padStart(2, "0");
-            const mes = (dataEmDate.getMonth() + 1).toString().padStart(2, "0");
-            const ano = dataEmDate.getFullYear();
+                const dia = dataEmDate.getDate().toString().padStart(2, "0");
+                const mes = (dataEmDate.getMonth() + 1)
+                  .toString()
+                  .padStart(2, "0");
+                const ano = dataEmDate.getFullYear();
 
-            const dataFormatada = `${dia}/${mes}/${ano}`;
+                const dataFormatada = `${dia}/${mes}/${ano}`;
 
-            return {
-              categoriaEmpresa: transaction.industry,
-              data: dataFormatada,
-              dataEPOCH: transaction.date,
-              chave: `${transaction.date}${transaction.account}`,
-              estado: transaction.state,
-              nomeEmpresa: transaction.account,
-              tipo: transaction.transaction_type,
-              valor: transaction.amount,
-            } as CardTransacaoProps;
-          }),
-        );
-      });
+                return {
+                  categoriaEmpresa: transaction.industry,
+                  data: dataFormatada,
+                  dataEPOCH: transaction.date,
+                  chave: `${transaction.date}${transaction.account}`,
+                  estado: transaction.state,
+                  nomeEmpresa: transaction.account,
+                  tipo: transaction.transaction_type,
+                  valor: transaction.amount,
+                } as CardTransacaoProps;
+              }),
+            );
+          });
+        });
     });
-  }, []);
+  }, [validarSessao]);
 
   const [dateRange, setDateRange] = useState<
     null | [Dayjs | null, Dayjs | null]
@@ -154,7 +161,7 @@ const Page: React.FC = () => {
             <Link href={"/graficos"}>{SIDEBAR_ITEMS.GRAFICOS}</Link>
           </Menu.Item>
           <Menu.Item key={SIDEBAR_ITEMS.SAIR}>
-            <Link href={"/login"}>{SIDEBAR_ITEMS.SAIR}</Link>
+            <Link href={"/acesso/login"}>{SIDEBAR_ITEMS.SAIR}</Link>
           </Menu.Item>
         </Menu>
       </Layout.Sider>
