@@ -13,8 +13,8 @@ import {
   Select,
   Space,
 } from "antd";
-import { Dayjs } from "dayjs";
-import { Dispatch, SetStateAction } from "react";
+import type { Dayjs } from "dayjs";
+import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
   transactionType?: "deposit" | "withdraw";
