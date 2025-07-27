@@ -41,34 +41,18 @@ const CardTransacao: React.FC<Props> = (props) => {
         {props.tipo === "deposit" ? "+" : "-"} R$ {props.valor}
       </styles.CardText.Title>
 
-      <p
-        style={{
-          color: "#374151",
-        }}
-      >
+      <styles.CardText.Common>
         Empresa: <strong>{props.nomeEmpresa}</strong>
-      </p>
-      <p
-        style={{
-          color: "#374151",
-        }}
-      >
+      </styles.CardText.Common>
+      <styles.CardText.Common>
         Indústria: <strong>{props.categoriaEmpresa}</strong>
-      </p>
-      <p
-        style={{
-          color: "#374151",
-        }}
-      >
+      </styles.CardText.Common>
+      <styles.CardText.Common>
         Estado: <strong>{props.estado}</strong>
-      </p>
-      <p
-        style={{
-          color: "#374151",
-        }}
-      >
+      </styles.CardText.Common>
+      <styles.CardText.Common>
         Data: <strong>{props.data}</strong>
-      </p>
+      </styles.CardText.Common>
     </styles.Card>
   );
 };
