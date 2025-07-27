@@ -15,6 +15,7 @@ import {
 } from "antd";
 import type { Dayjs } from "dayjs";
 import type { Dispatch, SetStateAction } from "react";
+import styled from "styled-components";
 
 type Props = {
   transactionType?: "deposit" | "withdraw";
@@ -127,6 +128,16 @@ const uniqueIndustries = [
   "Apparel, Accessories & Luxury Goods",
 ];
 
+const styles = {
+  Card: styled(Card)`      
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-size: 1.25rem;
+    font-weight: 600;
+  `,
+};
+
 const Filtro: React.FC<Props> = ({
   setTransactionType,
   transactionType,
@@ -151,7 +162,7 @@ const Filtro: React.FC<Props> = ({
   };
 
   return (
-    <Card
+    <styles.Card
       title={
         <span style={{ fontSize: "1.25rem", fontWeight: "600" }}>
           Filtros de Transações
@@ -345,7 +356,7 @@ const Filtro: React.FC<Props> = ({
           </Col>
         </Row>
       </Space>
-    </Card>
+    </styles.Card>
   );
 };
 
