@@ -22,6 +22,13 @@ const styles = {
   Layout: styled(Layout)`
     min-height: 100vh;
   `,
+  LayoutContent: styled(Layout.Content)`
+   & { 
+      margin: 1rem 1rem 0; 
+      max-height: "90vh"; 
+      overflow: "auto";
+    }
+  `,
 };
 
 const SIDEBAR_ITEMS = {
@@ -37,7 +44,7 @@ const Page: React.FC = () => {
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
       validarSessaoResp &&
-        fetch("http://localhost:3000/transactions.json").then((resp) => {
+        fetch("/transactions.json").then((resp) => {
           resp.json().then((data) => {
             setTransactions(
               data.map((transaction: any) => {
@@ -129,9 +136,7 @@ const Page: React.FC = () => {
       },
     );
 
-    return Object.values(map).sort(
-      (a, b) => new Date(a.date) - new Date(b.date),
-    );
+    return Object.values(map).sort((a, b) => a.date - b.date);
   }, [transactions, selectedMonth, selectedYear]);
 
   return (
@@ -155,9 +160,7 @@ const Page: React.FC = () => {
       </Layout.Sider>
 
       <Layout>
-        <Layout.Content
-          style={{ margin: "1rem 1rem 0", maxHeight: "90vh", overflow: "auto" }}
-        >
+        <styles.LayoutContent>
           <Filtro
             monthNames={monthNames}
             selectedMonth={selectedMonth}
@@ -195,15 +198,9 @@ const Page: React.FC = () => {
                 fill="#f44336"
                 name="Retiradas"
               />
-              {/* <Brush
-                dataKey="date"
-                height={30}
-                stroke="#8884d8"
-                travellerWidth={12}
-              /> */}
             </BarChart>
           </ResponsiveContainer>
-        </Layout.Content>
+        </styles.LayoutContent>
       </Layout>
     </styles.Layout>
   );

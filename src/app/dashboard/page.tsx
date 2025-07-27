@@ -15,6 +15,13 @@ const styles = {
   Layout: styled(Layout)`
     min-height: 100vh;
   `,
+  LayoutContent: styled(Layout.Content)`
+   & { 
+      margin: 1rem 1rem 0; 
+      max-height: "90vh"; 
+      overflow: "auto";
+    }
+  `,
 };
 
 const SIDEBAR_ITEMS = {
@@ -166,9 +173,7 @@ const Page: React.FC = () => {
         </Menu>
       </Layout.Sider>
       <Layout>
-        <Layout.Content
-          style={{ margin: "1rem 1rem 0", maxHeight: "90vh", overflow: "auto" }}
-        >
+        <styles.LayoutContent>
           <Filtro
             amountRange={amountRange}
             companyName={companyName}
@@ -184,7 +189,6 @@ const Page: React.FC = () => {
             transactionType={transactionType}
           />
           <List
-            style={{}}
             grid={{
               gutter: 16,
               xs: 1,
@@ -201,7 +205,7 @@ const Page: React.FC = () => {
               </List.Item>
             )}
           />
-        </Layout.Content>
+        </styles.LayoutContent>
         <Pagination
           align="center"
           defaultCurrent={1}
