@@ -19,6 +19,11 @@ import styled from "styled-components";
 import { useAuth } from "~/contexts/AuthContext";
 import type { CardTransacaoProps } from "../dashboard/components/CardTransacao";
 import Filtro from "./components/Filtro";
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  PieChartOutlined,
+} from "@ant-design/icons";
 
 const styles = {
   Layout: styled(Layout)`
@@ -187,13 +192,17 @@ const Page: React.FC = () => {
           defaultSelectedKeys={[SIDEBAR_ITEMS.GRAFICOS]}
           mode="inline"
         >
-          <Menu.Item key={SIDEBAR_ITEMS.INICIO}>
+          <Menu.Item key={SIDEBAR_ITEMS.INICIO} icon={<HomeOutlined />}>
             <Link href={"/dashboard"}>{SIDEBAR_ITEMS.INICIO}</Link>
           </Menu.Item>
-          <Menu.Item key={SIDEBAR_ITEMS.GRAFICOS}>
+          <Menu.Item key={SIDEBAR_ITEMS.GRAFICOS} icon={<PieChartOutlined />}>
             <Link href={"/graficos"}>{SIDEBAR_ITEMS.GRAFICOS}</Link>
           </Menu.Item>
-          <Menu.Item key={SIDEBAR_ITEMS.SAIR} onClick={logout}>
+          <Menu.Item
+            key={SIDEBAR_ITEMS.SAIR}
+            onClick={logout}
+            icon={<LogoutOutlined />}
+          >
             <Link href={"/acesso/login"}>{SIDEBAR_ITEMS.SAIR}</Link>
           </Menu.Item>
         </Menu>
