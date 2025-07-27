@@ -19,7 +19,7 @@ body {
 body {
   color: oklch(92.8% 0.006 264.531);
   background: oklch(21% 0.034 264.665);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Giphurs, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
