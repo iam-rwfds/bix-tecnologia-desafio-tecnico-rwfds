@@ -37,7 +37,7 @@ const Page: React.FC = () => {
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
       validarSessaoResp &&
-        fetch("http://localhost:3000/transactions.json").then((resp) => {
+        fetch("/transactions.json").then((resp) => {
           resp.json().then((data) => {
             setTransactions(
               data.map((transaction: any) => {
