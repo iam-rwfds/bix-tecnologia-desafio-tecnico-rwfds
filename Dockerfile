@@ -6,8 +6,8 @@ FROM oven/bun:1.2.18-alpine AS builder
 
 WORKDIR /app
 
-# Copy package.json and bun.lockb first to leverage Docker layer caching
-COPY package.json bun.lockb ./
+# Copy package.json and bun.lock first to leverage Docker layer caching
+COPY package.json bun.lock ./
 
 # Install dependencies using Bun.
 RUN bun install --frozen-lockfile
