@@ -38,7 +38,11 @@ const CardTransacao: React.FC<Props> = (props) => {
   return (
     <styles.Card>
       <styles.CardText.Title $type={props.tipo as "deposit" | "withdraw"}>
-        {props.tipo === "deposit" ? "+" : "-"} R$ {props.valor}
+        {props.tipo === "deposit" ? "+ " : "- "}
+        {(parseInt(props.valor, 10) / 100).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })}
       </styles.CardText.Title>
 
       <styles.CardText.Common>
