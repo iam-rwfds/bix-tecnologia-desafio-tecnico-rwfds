@@ -10,6 +10,11 @@ import CardTransacao, {
   type CardTransacaoProps,
 } from "./components/CardTransacao";
 import Filtro from "./components/Filtro";
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  PieChartOutlined,
+} from "@ant-design/icons";
 
 const styles = {
   Layout: styled(Layout)`
@@ -18,8 +23,14 @@ const styles = {
   LayoutContent: styled(Layout.Content)`
    & { 
       margin: 1rem 1rem 0; 
-      max-height: "90vh"; 
-      overflow: "auto";
+      max-height: 90vh; 
+      overflow: auto;
+    }
+  `,
+  LayoutSider: styled(Layout.Sider)`
+    & .ant-layout-sider-children { 
+      display: flex;
+      align-items: center;
     }
   `,
 };
@@ -155,23 +166,27 @@ const Page: React.FC = () => {
 
   return (
     <styles.Layout>
-      <Layout.Sider>
+      <styles.LayoutSider>
         <Menu
           theme="dark"
           defaultSelectedKeys={[SIDEBAR_ITEMS.INICIO]}
           mode="inline"
         >
-          <Menu.Item key={SIDEBAR_ITEMS.INICIO}>
+          <Menu.Item key={SIDEBAR_ITEMS.INICIO} icon={<HomeOutlined />}>
             <Link href={"/dashboard"}>{SIDEBAR_ITEMS.INICIO}</Link>
           </Menu.Item>
-          <Menu.Item key={SIDEBAR_ITEMS.GRAFICOS}>
+          <Menu.Item key={SIDEBAR_ITEMS.GRAFICOS} icon={<PieChartOutlined />}>
             <Link href={"/graficos"}>{SIDEBAR_ITEMS.GRAFICOS}</Link>
           </Menu.Item>
-          <Menu.Item key={SIDEBAR_ITEMS.SAIR} onClick={logout}>
+          <Menu.Item
+            key={SIDEBAR_ITEMS.SAIR}
+            onClick={logout}
+            icon={<LogoutOutlined />}
+          >
             <Link href={"/acesso/login"}>{SIDEBAR_ITEMS.SAIR}</Link>
           </Menu.Item>
         </Menu>
-      </Layout.Sider>
+      </styles.LayoutSider>
       <Layout>
         <styles.LayoutContent>
           <Filtro
