@@ -23,9 +23,7 @@ const Filtro: React.FC<Props> = ({
   return (
     <Card
       title={
-        <span style={{ fontSize: "1.25rem", fontWeight: "600" }}>
-          Chart Filters
-        </span>
+        <span style={{ fontSize: "1.25rem", fontWeight: "600" }}>Filtros</span>
       }
       style={{
         marginTop: "1.5rem", // Added margin-top to separate from previous card
@@ -36,7 +34,6 @@ const Filtro: React.FC<Props> = ({
       }}
     >
       <Row gutter={[16, 16]} align="middle">
-        {/* Year Filter for Charts */}
         <Col xs={24} sm={8} md={6}>
           <label
             style={{
@@ -47,7 +44,7 @@ const Filtro: React.FC<Props> = ({
               marginBottom: "0.25rem",
             }}
           >
-            Chart Year:
+            Filtrar por ano:
           </label>
           <Select
             placeholder="Select Year"
@@ -64,7 +61,6 @@ const Filtro: React.FC<Props> = ({
           </Select>
         </Col>
 
-        {/* Month Filter for Charts */}
         <Col xs={24} sm={8} md={6}>
           <label
             style={{
@@ -75,7 +71,7 @@ const Filtro: React.FC<Props> = ({
               marginBottom: "0.25rem",
             }}
           >
-            Chart Month:
+            Filtrar por mês:
           </label>
           <Select
             placeholder="Select Month"
