@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   type ReactNode,
@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const logout = useCallback(() => {
     setAccessToken(null);
@@ -133,11 +134,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     validarSessao().then((validarSessaoResp) => {
-      if (!validarSessaoResp) {
+      if (
+        !validarSessaoResp &&
+        pathname !== "/acesso/login" &&
+        pathname !== "/acesso/cadastro"
+      ) {
         router.push("/acesso/login");
       }
+
+      if (
+        validarSessaoResp &&
+        (pathname === "/acesso/login" || pathname === "/acesso/cadastro")
+      ) {
+        router.push("/dashboard");
+      }
     });
-  }, [validarSessao, router]);
+  }, [validarSessao, router, pathname]);
 
   const signup: AuthContextType["signup"] = async (email, password) => {
     try {

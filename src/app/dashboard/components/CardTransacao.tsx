@@ -16,23 +16,30 @@ type Props = {
 
 const styles = {
   Card: styled(Card)`
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   `,
+  CardText: {
+    Common: styled.p`
+      color: #374151;
+    `,
+    Title: styled.p<{
+      $type: "deposit" | "withdraw";
+    }>`
+      ${(props) =>
+        props.$type === "deposit" ? "color: #059669;" : "color: #dc2626;"}
+
+      font-weight: 600;
+      font-size: 2rem;
+    `,
+  },
 };
 
 const CardTransacao: React.FC<Props> = (props) => {
   return (
     <styles.Card>
-      <p
-        style={{
-          color: props.tipo === "deposit" ? "#059669" : "#dc2626",
-          fontWeight: 600,
-          fontSize: "2rem",
-        }}
-      >
+      <styles.CardText.Title $type={props.tipo as "deposit" | "withdraw"}>
         {props.tipo === "deposit" ? "+" : "-"} R$ {props.valor}
-      </p>
+      </styles.CardText.Title>
 
       <p
         style={{

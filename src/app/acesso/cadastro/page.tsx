@@ -3,10 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "~/contexts/AuthContext";
-import { Button } from "./components/Button";
-import { Container } from "./components/Container";
-import { Input } from "./components/Input";
-import { Label } from "./components/Label";
+import * as styles from "../components/styles";
 
 const Page: React.FC = () => {
   const { signup } = useAuth();
@@ -27,62 +24,39 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingLeft: "1rem",
-        paddingRight: "1rem",
-        minHeight: "100vh",
-      }}
-    >
-      <Container>
+    <styles.Container>
+      <styles.FormContainer>
         <form onSubmit={handleSubmit}>
-          <div
-            style={{
-              marginBottom: "1.5rem",
-            }}
-          >
-            <Label htmlFor="email">Email</Label>
-            <Input
+          <styles.LabelContainer>
+            <styles.Label htmlFor="email">Email</styles.Label>
+            <styles.Input
               type="email"
               id="email"
               name="email"
               placeholder="voce@exemplo.com"
               required
             />
-          </div>
-          <div
-            style={{
-              marginBottom: "1.5rem",
-            }}
-          >
-            <Label htmlFor="password">Senha</Label>
-            <Input
+          </styles.LabelContainer>
+          <styles.LabelContainer>
+            <styles.Label htmlFor="password">Senha</styles.Label>
+            <styles.Input
               type="password"
               id="password"
               name="password"
               placeholder="********"
               required
             />
-          </div>
+          </styles.LabelContainer>
 
           <div>
-            <Button type="submit">Cadastrar</Button>
-            <Link
-              href={"/acesso/login"}
-              style={{
-                marginTop: "1rem",
-                display: "block",
-              }}
-            >
+            <styles.Button type="submit">Cadastrar</styles.Button>
+            <styles.Link href={"/acesso/login"}>
               Já tem uma conta? Faça o login
-            </Link>
+            </styles.Link>
           </div>
         </form>
-      </Container>
-    </div>
+      </styles.FormContainer>
+    </styles.Container>
   );
 };
 
