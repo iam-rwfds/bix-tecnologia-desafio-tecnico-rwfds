@@ -116,17 +116,22 @@ const Page: React.FC = () => {
           ({ categoriaEmpresa }) => !industry || categoriaEmpresa === industry,
         )
         .filter(({ valor }) => {
-          if (!amountRange[0] && !amountRange[1]) {
+          const valorEmReais = parseInt(valor, 10) / 100;
+          const [min, max] = amountRange;
+
+          if (min === null && max === null) {
             return true;
           }
 
-          if (amountRange[0] && !amountRange[1]) {
-            return +valor >= amountRange[0];
+          if (min !== null && valorEmReais < min) {
+            return false;
           }
 
-          if (!amountRange[0] && amountRange[1]) {
-            return +valor >= amountRange[1];
+          if (max !== null && valorEmReais > max) {
+            return false;
           }
+
+          return true;
         })
         .filter(({ dataEPOCH = 0 }) => {
           if (!dateRange || !dateRange[0] || !dateRange[1]) {
