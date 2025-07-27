@@ -1,19 +1,38 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AuthProvider } from "~/contexts/AuthContext";
 import StyledComponentsRegistry from "../../lib/registry";
+import { ConfigProvider } from "antd";
+import theme from "../../theme/themeConfig";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const fonts = localFont({
+  src: [
+    {
+      path: "./fonts/Giphurs-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Giphurs-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Giphurs-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Giphurs-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  variable: "--font-giphurs",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,11 +45,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={fonts.className}>
       <body>
         <AntdRegistry>
           <StyledComponentsRegistry>
-            <AuthProvider>{children}</AuthProvider>
+            <ConfigProvider theme={theme}>
+              <AuthProvider>{children}</AuthProvider>
+            </ConfigProvider>
           </StyledComponentsRegistry>
         </AntdRegistry>
       </body>
