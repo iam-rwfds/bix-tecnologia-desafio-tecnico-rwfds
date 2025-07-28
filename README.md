@@ -2,16 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+> This project requires Bun as the underlying execution environment, so in order to run this project locally, it's fundamental to have any Bun 1.2.x version installed in your machine.
+
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun --bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
